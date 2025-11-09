@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Inventory Management System
 
-## Getting Started
+A fast, modern dashboard to manage products, track stock levels, and surface insights. Built with Next.js App Router, Prisma, and a clean, recruiter-friendly UI.
 
-First, run the development server:
+### ✨ Highlights
+
+- **Real-time-ish UX**: route-level loading states with a clean spinner and persistent sidebar.
+- **Inventory features**: add products, view inventory, low-stock timestamping, and basic analytics.
+- **Auth-ready**: integrated with `@stackframe/stack` for authentication UI.
+- **Type-safe data**: Prisma schema and generated client checked into `src/generated` for reliability.
+
+### 🧭 App Structure
+
+- `app/` — App Router pages: `dashboard`, `inventory`, `add-product`, `settings`, global `layout` and `loading`.
+- `components/` — shared UI like `sidebar`, `pagination`, `products-chart`.
+- `lib/` — server actions and auth helpers (e.g., `lib/actions/products.ts`).
+- `prisma/` — schema, migrations, and seed script.
+
+### 🚀 Getting Started
+
+Prerequisites: Node 18+, PostgreSQL (or configured Prisma datasource).
+
+1. Install deps
+
+```bash
+npm install
+```
+
+2. Configure database
+
+Create a `.env` with your database URL:
+
+```bash
+DATABASE_URL="postgresql://user:password@localhost:5432/inventory"
+```
+
+3. Run migrations and seed (optional)
+
+```bash
+npx prisma migrate deploy
+npx prisma db seed # optional
+```
+
+4. Start the dev server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then visit `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 🧩 Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Next.js 15 / App Router** for routing, layouts, and streaming UI
+- **TypeScript** end-to-end
+- **Prisma** ORM with migrations
+- **Tailwind CSS** for styling
+- **Stack (stackframe)** for auth UI widgets
+- **Lucide** icons
 
-## Learn More
+### 📸 Key Features (User Flow)
 
-To learn more about Next.js, take a look at the following resources:
+- Sign in and land on the **Dashboard** with a quick view of totals and trends.
+- Navigate via a persistent **Sidebar**.
+- **Inventory** page to browse products with pagination.
+- **Add Product** form with server actions for persistence.
+- **Settings** page placeholder for future org/app config.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🗂️ Important Files
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `app/layout.tsx` — global layout, fonts, metadata
+- `app/loading.tsx` — spinner-based route loading screen with sidebar
+- `lib/actions/products.ts` — server actions for product CRUD
+- `prisma/schema.prisma` — database schema
 
-## Deploy on Vercel
+### 🔧 Development Scripts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `npm run dev` — start dev server
+- `npm run build` — production build
+- `npm run start` — start production server
+- `npx prisma studio` — inspect the database
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 🌐 Deployment
+
+Deploy anywhere that supports Node (Vercel recommended). Ensure `DATABASE_URL` is set and run `prisma migrate deploy` during build/start.
+
+### 🧭 Roadmap Ideas
+
+- Role-based access and activity logs
+- Advanced analytics and CSV export
+- Bulk edits and barcode scanning
+- Webhooks/integrations (Shopify, Stripe)
+
+### 👤 Author
+
+Built by Ly The Ansem. If you’d like a quick walkthrough or want to discuss the architecture, open an issue or reach out.
+
+---
+
+If you’re reviewing this as a recruiter: the codebase emphasizes clarity, type safety, and pragmatic UX—favoring a production-ready structure over demo-only code.
