@@ -24,24 +24,29 @@ export async function deleteProduct(formData: FormData) {
 export async function createProduct(formData: FormData) {
   const user = await getCurrentUser();
 
+  const lowStockAtValue = formData.get("lowStockAt");
   const parsed = ProductSchema.safeParse({
     name: formData.get("name"),
     price: formData.get("price"),
     quantity: formData.get("quantity"),
     sku: formData.get("sku") || undefined,
-    lowStockAt: formData.get("lowStockAt") || undefined,
+    lowStockAt: lowStockAtValue && lowStockAtValue !== "" ? lowStockAtValue : undefined,
   });
 
   if (!parsed.success) {
-    throw new Error("Validation Failed");
+    console.error("Validation error:", parsed.error);
+    throw new Error("Validation Failed: " + parsed.error.errors.map(e => e.message).join(", "));
   }
 
   try {
     await prisma.product.create({
       data: { ...parsed.data, userId: user.id },
     });
-    redirect("/inventory");
   } catch (error) {
-    throw new Error("Failed to create product.");
+    console.error("Failed to create product:", error);
+    throw new Error(`Failed to create product: ${error instanceof Error ? error.message : "Unknown error"}`);
   }
+
+  // Redirect after successful creation (outside try-catch so redirect errors propagate)
+  redirect("/inventory");
 }
