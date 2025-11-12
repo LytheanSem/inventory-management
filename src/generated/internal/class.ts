@@ -33,6 +33,10 @@ const config: runtime.GetPrismaClientConfig = {
         "fromEnvVar": null,
         "value": "darwin-arm64",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "rhel-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -55,8 +59,8 @@ const config: runtime.GetPrismaClientConfig = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Product {\n  id         String  @id @default(cuid())\n  userId     String // Stack Auth User ID\n  name       String\n  sku        String? @unique // This is a unique id for each products (most retail companies has it)\n  price      Decimal @db.Decimal(12, 2)\n  quantity   Int     @default(0)\n  lowStockAt Int?\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  // Below is for fast query for the products\n  @@index([userId, name])\n  @@index([createdAt])\n}\n",
-  "inlineSchemaHash": "64a874ef3aa07833d04dca6dc477bc6e095595b89fd82700c7e2338ecd0b41f1",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider      = \"prisma-client\"\n  output        = \"../src/generated\"\n  binaryTargets = [\"native\", \"rhel-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Product {\n  id         String  @id @default(cuid())\n  userId     String // Stack Auth User ID\n  name       String\n  sku        String? @unique // This is a unique id for each products (most retail companies has it)\n  price      Decimal @db.Decimal(12, 2)\n  quantity   Int     @default(0)\n  lowStockAt Int?\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  // Below is for fast query for the products\n  @@index([userId, name])\n  @@index([createdAt])\n}\n",
+  "inlineSchemaHash": "7558ac93efcd3aaa8559df94ea9933d0d8c4e3380eb7e817942cbf4cc1eba8f8",
   "copyEngine": true,
   "runtimeDataModel": {
     "models": {},
