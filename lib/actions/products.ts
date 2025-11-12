@@ -35,7 +35,7 @@ export async function createProduct(formData: FormData) {
 
   if (!parsed.success) {
     console.error("Validation error:", parsed.error);
-    throw new Error("Validation Failed: " + parsed.error.errors.map(e => e.message).join(", "));
+    throw new Error("Validation Failed: " + parsed.error.issues.map((e) => e.message).join(", "));
   }
 
   try {
