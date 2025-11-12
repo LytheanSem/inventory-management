@@ -79,7 +79,7 @@ export default async function DashboardPage() {
     });
   }
 
-  let recent;
+  let recent: Awaited<ReturnType<typeof prisma.product.findMany>>;
   try {
     recent = await prisma.product.findMany({
       where: { userId },
