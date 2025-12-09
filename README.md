@@ -93,7 +93,7 @@ Deploy anywhere that supports Node (Vercel recommended). Ensure `DATABASE_URL` i
 
 ### 👤 Author
 
-Built by Ly The Ansem. If you’d like a quick walkthrough or want to discuss the architecture, open an issue or reach out.
+Built by Lythean Sem. If you’d like a quick walkthrough or want to discuss the architecture, open an issue or reach out.
 
 ---
 
