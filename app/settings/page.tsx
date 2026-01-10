@@ -2,8 +2,10 @@ import Sidebar from "@/components/sidebar";
 import { getCurrentUser } from "@/lib/auth";
 import { AccountSettings } from "@stackframe/stack";
 
+export const dynamic = "force-dynamic";
+
 export default async function SettingsPage() {
-  const user = await getCurrentUser();
+  await getCurrentUser();
 
   return (
     <div className="min-h-screen bg-gray-50">

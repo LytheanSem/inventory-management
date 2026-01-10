@@ -26,13 +26,27 @@ Prerequisites: Node 18+, PostgreSQL (or configured Prisma datasource).
 npm install
 ```
 
-2. Configure database
+2. Configure Stack Auth
 
-Create a `.env` with your database URL:
+Create a `.env` file with your Stack Auth project credentials. You can find these in your [Stack Auth Dashboard](https://stack-auth.com/dashboard) under "Project Keys":
 
 ```bash
+# Stack Auth Configuration
+NEXT_PUBLIC_STACK_PROJECT_ID="your-project-id"
+NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY="your-publishable-client-key"
+STACK_SECRET_SERVER_KEY="your-secret-server-key"
+
+# Database Configuration
 DATABASE_URL="postgresql://user:password@localhost:5432/inventory"
 ```
+
+**To get your Stack Auth keys:**
+1. Go to [Stack Auth Dashboard](https://stack-auth.com/dashboard)
+2. Select your project (or create a new one)
+3. Navigate to "Project Keys" in the sidebar
+4. Click "Create Project Keys" if you haven't created any yet
+5. Copy the **Project ID**, **Publishable Client Key**, and **Secret Server Key**
+6. Add them to your `.env` file
 
 3. Run migrations and seed (optional)
 
@@ -83,6 +97,28 @@ Then visit `http://localhost:3000`.
 ### 🌐 Deployment
 
 Deploy anywhere that supports Node (Vercel recommended). Ensure `DATABASE_URL` is set and run `prisma migrate deploy` during build/start.
+
+**Important for Stack Auth Deployment:**
+
+1. **Add environment variables to Vercel:**
+   - Go to your Vercel project settings → Environment Variables
+   - Add all three Stack Auth variables:
+     - `NEXT_PUBLIC_STACK_PROJECT_ID`
+     - `NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY`
+     - `STACK_SECRET_SERVER_KEY`
+   - Make sure to add them for **Production** environment
+   - Redeploy your application after adding the variables
+
+2. **Whitelist your production domain(s) in Stack Auth:**
+   - Go to your project in the [Stack Auth Dashboard](https://stack-auth.com/dashboard)
+   - Navigate to "Authentication" → "Trusted Domains"
+   - Click "Add new domain"
+   - Enter your Vercel domain using **only the domain name** (no `https://`, no trailing slash):
+     - ✅ Correct: `inventory-management-tau-one.vercel.app`
+     - ❌ Incorrect: `https://inventory-management-tau-one.vercel.app` or `inventory-management-tau-one.vercel.app/`
+   - If using a custom domain, add that as well (same format: just the domain name)
+
+Without both steps, OAuth sign-in (e.g., Google) will fail with a `REDIRECT_URL_NOT_WHITELISTED` error.
 
 ### 🧭 Roadmap Ideas
 

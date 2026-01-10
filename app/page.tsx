@@ -1,6 +1,15 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { getCurrentUserOrNull } from "@/lib/auth";
 
-export default function Home() {
+export default async function Home() {
+  // If user is authenticated, redirect to dashboard
+  const user = await getCurrentUserOrNull();
+  if (user) {
+    redirect("/dashboard");
+  }
+
+  // If not authenticated, show the home page
   return (
     <div className="min-h-screen bg-linear-to-br from-black to-blue-500 flex items-center justify-center">
       <div className="container mx-auto px-4 py-16">
